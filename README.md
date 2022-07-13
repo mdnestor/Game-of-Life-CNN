@@ -19,6 +19,6 @@ It can also be run in [Google Colab](https://colab.research.google.com/github/md
 
 [3]: Bert Wang-Chak Chan. "Lenia - Biology of Artificial Life". [arXiv:1812.05433](https://arxiv.org/abs/1812.05433)
 
-![output](demo/output.gif)
+![output](demo/output2.gif)
 
 
