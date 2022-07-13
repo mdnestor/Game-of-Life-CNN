@@ -7,9 +7,9 @@ This project is inspired by [neuralpatterns.io](https://github.com/MaxRobinsonTh
 
 ## Setup
 
-The main module is implemented in [model.py](model.py), and the [demo notebook](golcnn.ipynb) shows how to run a simulation from a given initial configuation, as well as how to run the simulation on a GPU for mega speed!
+The main module is implemented in [model.py](model.py), and the [demo notebook](demo/golcnn.ipynb) shows how to run a simulation from a given initial configuation, as well as how to run the simulation on a GPU for mega speed!
 
-It can also be run in [Google Colab](https://colab.research.google.com/github/mdnestor/Game-of-Life-CNN/blob/master/golcnn.ipynb).
+It can also be run in [Google Colab](https://colab.research.google.com/github/mdnestor/Game-of-Life-CNN/blob/master/demo/golcnn.ipynb).
 
 ## References
 
@@ -18,3 +18,7 @@ It can also be run in [Google Colab](https://colab.research.google.com/github/md
 [2]: William Gilpin. "Cellular automata as convolutional neural networks". 2020. [arXiv:1809.02942](https://arxiv.org/abs/1809.02942)
 
 [3]: Bert Wang-Chak Chan. "Lenia - Biology of Artificial Life". [arXiv:1812.05433](https://arxiv.org/abs/1812.05433)
+
+![output](demo/output.gif)
+
+
