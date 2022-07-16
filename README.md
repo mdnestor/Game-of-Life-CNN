@@ -1,24 +1,54 @@
 # Conway's Game of Life as a one-layer convolutional neural network
 
-This repository shows how to implement [Conway's Game of Life](https://en.wikipedia.org/wiki/Conway%27s_Game_of_Life) as a convolutional neural network (CNN) in PyTorch.
-This is not to be confused with attempts to model Game of Life via machine learning as in [1], [2] - rather, it shows that the Game of Life can *literally* be represented as a 1-layer CNN with a specific convolution kernel and bump activation function.
+This repository shows how to implement [Conway's Game of Life](https://en.wikipedia.org/wiki/Conway%27s_Game_of_Life) as a 1-layer convolutional neural network (CNN) in PyTorch.
 
-This project is inspired by [neuralpatterns.io](https://github.com/MaxRobinsonTheGreat/NeuralPatterns), a web application for simulating so-called neural cellular automata and also [Lenia](https://chakazul.github.io/lenia.html) ([3]), a "Life"-life reaction-diffusion system built on alternating convolution and pointwise activation.
+This is not to be confused with attempts to model Game of Life via machine learning as in [arXiv:2009.01398](https://arxiv.org/abs/2009.01398) or [arXiv:1809.02942](https://arxiv.org/abs/1809.02942).
 
-## Setup
+## Usage
 
-The main module is implemented in [model.py](model.py), and the [demo notebook](demo/golcnn.ipynb) shows how to run a simulation from a given initial configuation, as well as how to run the simulation on a GPU for mega speed!
+The model is implemented in the [demo notebook](demo/golcnn.ipynb).
+It can also be run in [colab](https://colab.research.google.com/github/mdnestor/Game-of-Life-CNN/blob/master/demo/golcnn.ipynb).
 
-It can also be run in [Google Colab](https://colab.research.google.com/github/mdnestor/Game-of-Life-CNN/blob/master/demo/golcnn.ipynb).
+```sh
+git clone https://github.com/mdnestor/Game-of-Life-CNN.git
+cd Game-of-Life-CNN
+```
 
-## References
+```python
+import torch
+from model import GOLCNN
+golcnn = GOLCNN()
+```
 
-[1]: Jacob M. Springer, Garrett T. Kenyon. "It's Hard for Neural Networks To Learn the Game of Life".  2020. [arXiv:2009.01398](https://arxiv.org/abs/2009.01398)
+Generate a random initial state with [37% initial density](https://arxiv.org/abs/1407.1006) and convert to tensor:
 
-[2]: William Gilpin. "Cellular automata as convolutional neural networks". 2020. [arXiv:1809.02942](https://arxiv.org/abs/1809.02942)
+```python
+import numpy as np
+width, height = 100, 100
+state = np.random.binomial(n=1, p=0.37, size=(width, height))
+state = state.astype('float32')
+state = torch.tensor(state)
+state = state.unsqueeze(0).unsqueeze(0)
+```
 
-[3]: Bert Wang-Chak Chan. "Lenia - Biology of Artificial Life". [arXiv:1812.05433](https://arxiv.org/abs/1812.05433)
+(Optional) Push to GPU:
 
-![output](demo/output2.gif)
+```python
+device = torch.device('cuda')
+golcnn = golcnn.to(device)
+state = state.to(device)
+```
 
+Simulate trajectory:
 
+```python
+import time
+history = [state]
+t0 = time.time()
+for _ in range(1000):
+    state = golcnn(state)
+    history.append(state)
+t1 = time.time()
+print(f'Elapsed time: {t1 - t0} s')
+```
+> Elapsed time: 0.41646599769592285 s
