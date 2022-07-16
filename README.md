@@ -14,6 +14,7 @@ git clone https://github.com/mdnestor/Game-of-Life-CNN.git
 cd Game-of-Life-CNN
 ```
 
+Load the convolutional neural network from [model.py](model.py):
 ```python
 import torch
 from model import GOLCNN
